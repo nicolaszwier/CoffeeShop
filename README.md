@@ -1,5 +1,11 @@
 # Coffee Shop Full Stack
 
+
+## What is this project?
+
+This is a coffe shop made in FullStack nanodegree at Udacity. 
+It was built with python Flask on backend and Ionic framework and Angular in the frontend. The starter code was disponibilized by udacity and implemented by me following the instructions contained on this readme.
+
 ## Full Stack Nano - IAM Final Project
 
 Udacity has decided to open a new digitally enabled cafe for students to order drinks, socialize, and study hard. But they need help setting up their menu experience.
