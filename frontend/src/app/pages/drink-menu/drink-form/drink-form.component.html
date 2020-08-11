@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="isNew">New Drink Creator</ion-title>
+    <ion-title *ngIf="!isNew">Drink Editor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="drink">
+  <div style="width: 100%; display: flex; justify-content: center; padding: 15px;">
+
+    <app-drink-graphic [drink]="drink"></app-drink-graphic>
+  </div>
+
+  <form (ngSubmit)="logForm()">
+    <ion-item>
+      <ion-label style="font-size:22px; font-weight: 600;">Drink Title:</ion-label>
+      <ion-input type="text" [(ngModel)]="drink.title" name="title"></ion-input>
+    </ion-item>
+
+    <ion-item *ngFor="let ingredient of drink.recipe; let i = index;  trackBy: customTrackBy">
+      <ion-label style="color: grey;"> Ingredient Name:</ion-label>
+      <ion-input style="font-weight: 600;" [(ngModel)]="drink.recipe[i].name" [name]="'Ingredient Title'+i"></ion-input>
+
+      <ion-label style="color: grey;">Number of Parts:</ion-label>
+      <ion-input style="font-weight: 600;" type="number" [(ngModel)]="drink.recipe[i].parts"
+        [name]="'Ingredient Parts'+i"></ion-input>
+
+      <ion-label style="color: grey;">Color:</ion-label>
+      <ion-input style="font-weight: 600;" type="text" [(ngModel)]="drink.recipe[i].color"
+        [name]="'Ingredient Color'+i"></ion-input>
+
+      <ion-button color="danger" (click)="removeIngredient(i)" [disabled]="i==0 && drink.recipe.length==1">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button><br />
+      <ion-button (click)="addIngredient(i)" [disabled]="drink.recipe.length==5">
+        <ion-icon name="add"></ion-icon>
+      </ion-button><br />
+
+    </ion-item>
+
+    <div style="display: flex; justify-content: flex-end; margin: 10px;">
+      <ion-button color="light" (click)="closeModal()">Cancel</ion-button>
+      <ion-button color="danger" [disabled]="!auth.can('delete:drinks')" (click)="deleteClicked()">Delete</ion-button>
+      <ion-button [disabled]="!auth.can('patch:drinks') || !auth.can('post:drinks')" (click)="saveClicked()">Save
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
